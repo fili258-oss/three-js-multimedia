@@ -5,16 +5,10 @@ import { TextureLoader, Sprite, SpriteMaterial, VideoTexture, Vector3 } from "th
 
 export default function ModeloInicio() {
   const gltf = useLoader(GLTFLoader, "/assets/model.glb");
+
   const texture = useLoader(TextureLoader, "/assets/baked.jpg");
   const texture2 = useLoader(TextureLoader, "/assets/picture2.png");
   const texture3 = useLoader(TextureLoader, "/assets/publicidad.jpg");
-  const videoRef = useRef(document.createElement("video"));
-  const modelRef = useRef();
-  const chairRef = useRef();
-  const speakerRef = useRef();
-  const notesRef = useRef([]);
-  const [chairInitialPos, setChairInitialPos] = useState(null);
-  const [targetChairPosition, setTargetChairPosition] = useState(null);
   const audioRef = useRef(new Audio("/assets/ambiente.mp3"));
   const chairAudioRef = useRef(new Audio("/assets/chair-move.mp3"));
   const noteTextures = [
@@ -22,6 +16,16 @@ export default function ModeloInicio() {
     useLoader(TextureLoader, "/assets/note2.png"),
     useLoader(TextureLoader, "/assets/note3.png"),
   ];
+
+  const videoRef = useRef(document.createElement("video"));
+  const modelRef = useRef();
+  const chairRef = useRef();
+  const speakerRef = useRef();
+  const notesRef = useRef([]);
+  const mouseRef = useRef();
+
+  const [chairInitialPos, setChairInitialPos] = useState(null);
+  const [targetChairPosition, setTargetChairPosition] = useState(null);
   const noteIntervalRef = useRef(null);
 
   useEffect(() => {
@@ -37,6 +41,7 @@ export default function ModeloInicio() {
     videoRef.current.loop = true;
     videoRef.current.muted = true;
     videoRef.current.play(); // 🔹 Autoplay
+
     const videoTexture = new VideoTexture(videoRef.current);
 
     gltf.scene.traverse((child) => {
@@ -58,9 +63,11 @@ export default function ModeloInicio() {
     // 📌 Obtener referencias de los objetos
     chairRef.current = gltf.scene.getObjectByName("chair");
     speakerRef.current = gltf.scene.getObjectByName("speaker");
+    mouseRefRef.current = gltf.scene.getObjectByName("mouse");
 
     if (!chairRef.current) console.warn("No se encontró la silla");
     if (!speakerRef.current) console.warn("No se encontró el speaker");
+    if (!mouseRef.current) console.warn("No se encontró el mouse");
 
     // 📌 Guardar la posición inicial de la silla
     if (chairRef.current) {
