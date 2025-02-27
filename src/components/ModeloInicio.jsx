@@ -63,7 +63,7 @@ export default function ModeloInicio() {
     // 📌 Obtener referencias de los objetos
     chairRef.current = gltf.scene.getObjectByName("chair");
     speakerRef.current = gltf.scene.getObjectByName("speaker");
-    mouseRefRef.current = gltf.scene.getObjectByName("mouse");
+    mouseRef.current = gltf.scene.getObjectByName("mouse");
 
     if (!chairRef.current) console.warn("No se encontró la silla");
     if (!speakerRef.current) console.warn("No se encontró el speaker");
